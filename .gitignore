@@ -1,0 +1,15 @@
+node_modules/
+public/
+source/_backup/
+scripts/
+
+Thumbs.db
+db.json
+pnpm-lock.yaml
+*.log
+
+.DS_Store
+.deploy*/
+.history/
+.vscode/
+.deploy_git/
