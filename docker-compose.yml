@@ -4,6 +4,6 @@ services:
     image: blog:latest
     container_name: blog
     ports:
-      - 4000:4000
+      - 4000:80
     volumes:
       - ./:/blog
