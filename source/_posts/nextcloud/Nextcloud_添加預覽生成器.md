@@ -59,18 +59,28 @@ pkg install ffmpeg
 詳細配置可參考此[連結](https://docs.nextcloud.com/server/latest/admin_manual/configuration_server/config_sample_php_parameters.html#enabledpreviewproviders)  
 
 
+待生成的檔案過多會等比較久，我60萬筆資料等了快三天才全部生成完成  
+可在 `config/config.php` 設置最大與覽圖生成尺寸來加快速度 (預設值為 null)  
+
+```php
+  'preview_max_x' => 1024,
+  'preview_max_y' => 1024,
+```
+
 配置完成後使用以下命令進行全部的預覽圖生成  
-(待生成的檔案過多會等比較久)  
+(-v 為輸出的 log 詳細程度)  
 ```tcsh
 sudo -u www /usr/local/bin/php /usr/local/www/nextcloud/occ preview:generate-all -vvv
 ```
+
+
 
 完成後配置 cronjob 使用者為 www ，我設置每五分鐘執行一次  
 ```tcsh
 crontab -u www -e
 
 
-*/5 * * * * /usr/local/bin/php /usr/local/www/nextcloud/occ preview:pre-generate -vvv
+*/5 * * * * /usr/local/bin/php /usr/local/www/nextcloud/occ preview:pre-generate -v
 ```
 
 完成上述配置後圖片預覽就能正常使用了  
@@ -93,7 +103,75 @@ crontab -u www -e
 rm -rf preview/*
 ```
 
-完成後重啟 Nextcloud 並關閉維護模式及啟用預覽圖生成的 cronjob 即可再次使用。  
+刪除完成後使用資料庫管理員進入 nextcloud 資料庫
+```tcsh
+mysql -u dbadmin -p nextcloud
+```
+
+使用此段 SQL 命令列出預覽圖的快取總數，`appdata_<instanceid>` 替換成與你實例相同的 **instanceid**   
+```sql
+SELECT COUNT(*) FROM oc_filecache WHERE path LIKE "appdata_oc538c7su4sg/preview/%";
+```
+
+刪除預覽圖的所有快取資料  
+```sql
+DELETE FROM oc_filecache WHERE path LIKE "appdata_oc538c7su4sg/preview/%";
+```
+
+
+```
+dbadmin@localhost [nextcloud]> SELECT COUNT(*) FROM oc_filecache WHERE path LIKE "appdata_oc538c7su4sg/preview/%";
++----------+
+| COUNT(*) |
++----------+
+|   610830 |
++----------+
+1 row in set (1.97 sec)
+
+dbadmin@localhost [nextcloud]> 
+dbadmin@localhost [nextcloud]> 
+dbadmin@localhost [nextcloud]> DELETE FROM oc_filecache WHERE path LIKE "appdata_oc538c7su4sg/preview/%";
+
+Query OK, 610830 rows affected (4 min 44.38 sec)
+
+dbadmin@localhost [nextcloud]> 
+dbadmin@localhost [nextcloud]> 
+dbadmin@localhost [nextcloud]> SELECT COUNT(*) FROM oc_filecache WHERE path LIKE "appdata_oc538c7su4sg/preview/%";
++----------+
+| COUNT(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.37 sec)
+
+dbadmin@localhost [nextcloud]> 
+```
+
+
+如果不會操作資料庫也可使用以下命令達到相同效果 (也較安全)  
+
+刪除 `preview/` 下的內容後執行此命令，
+此命令將檢查 appdata 目錄並確保檔案快取與實際儲存上的檔案一致 (刪除預覽圖的快取資料)  
+```tcsh
+occ files:scan-app-data
+```
+
+```
+root@nextcloud27:/usr/local/www/nextcloud # occ files:scan-app-data
+Scanning AppData for files
+
++---------+--------+--------------+
+| Folders | Files  | Elapsed time |
++---------+--------+--------------+
+| 194131  | 404447 | 00:25:26     |
++---------+--------+--------------+
+root@nextcloud27:/usr/local/www/nextcloud # 
+```
+
+
+完成後即可重新設置預覽圖生成器，  
+關閉維護模式及啟用預覽圖生成的 cronjob 即可再次使用。  
+
 
 如果對設定有甚麼問題可以參考他們的 Github  
 https://github.com/nextcloud/previewgenerator  
