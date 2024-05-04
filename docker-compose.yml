@@ -6,5 +6,5 @@ services:
     restart: always
     ports:
       - 4000:80
-    volumes:
-      - ./:/blog
+    # volumes:
+    #   - ./:/blog
