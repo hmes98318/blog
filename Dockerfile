@@ -1,6 +1,7 @@
 FROM node:18.17.1
 
 WORKDIR /blog
+COPY . .
 
 RUN apt update -y && \
     apt install -y \
