@@ -20,7 +20,7 @@ date: 2023-08-28 10:02:35
 使用 ncadmin 登入網頁端，點擊進入應用程式安裝 **Preview Generator**   
 https://apps.nextcloud.com/apps/previewgenerator  
 
-![previewGenerator](/img/blogs/nextcloud/previewGenerator.png)
+![previewGenerator](/img/blogs/aba6d71/previewGenerator.png)
 
 接下來使用以下命令安裝 ffmpeg  
 (此安裝適用於 TrueNAS CORE Jail 的 Nextcloud ，點擊此[連結](https://ffmpeg.org/download.html)查看適用於你操作系統的安裝方式)  

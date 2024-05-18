@@ -22,23 +22,23 @@ date: 2023-08-27 22:10:02
 ## 前置作業
 
 開始進行前記得先幫資料拍張快照，避免造成不可逆的損失。  
-![createSnapshot](/img/blogs/nextcloud/createSnapshot.png)
+![createSnapshot](/img/blogs/811961c1/createSnapshot.png)
 
 使用 TrueNAS 的插件添加新的 Nextcloud，因為本次升級的版本為 27.0.2.1 所以我把名稱設為 nextcloud27  
-![pluginAdd](/img/blogs/nextcloud/pluginAdd.png)
+![pluginAdd](/img/blogs/811961c1/pluginAdd.png)
 
 安裝完成後記下以下內容，如果忘了也可以到插件那邊找。  
-![installSuccessMsg](/img/blogs/nextcloud/installSuccessMsg.png)
+![installSuccessMsg](/img/blogs/811961c1/installSuccessMsg.png)
 
 給新的 Nextcloud 資料添加掛載點，與舊的相同路徑。
-![mountPoint](/img/blogs/nextcloud/mountPoint.png)
+![mountPoint](/img/blogs/811961c1/mountPoint.png)
 
 
 ## 拉取設定檔
 
 接下來把舊的 Nextcloud 資料拉出來，使用 SSH 進入 TrueNAS ，  
 用 `iocage list` 列出當前的所有 Jail ，使用 `iocage exec <舊的 nextcloud ip> tcsh` 進入 Jail。  
-![iocageExec](/img/blogs/nextcloud/iocageExec.png)
+![iocageExec](/img/blogs/811961c1/iocageExec.png)
 
 進入 Nextcloud 主目錄  
 ```tcsh

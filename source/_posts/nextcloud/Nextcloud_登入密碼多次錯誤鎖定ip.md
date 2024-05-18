@@ -1,12 +1,12 @@
 ---
-title: Nextcloud 登入密碼多次錯誤鎖定ip
+title: Nextcloud 登入密碼多次錯誤鎖定IP
 tags:
   - Nextcloud
 categories: Nextcloud
 keywords: 'Nextcloud,Nextcloud 登入鎖定,Nextcloud 密碼錯誤,Nextcloud Too many auth attempts'
-description: Nextcloud 登入密碼多次錯誤鎖定ip
+description: Nextcloud 登入密碼多次錯誤鎖定IP
 cover: /img/background/nextcloud.png
-abbrlink: 6cb700d9
+abbrlink: c25d04b3
 comments: true
 date: 2024-05-19 03:30:37
 ---
@@ -14,7 +14,7 @@ date: 2024-05-19 03:30:37
 
 在登入 Nextcloud 網頁時，顯示登入密碼多次錯誤鎖定 IP，而只有在內網連接時才會出現此錯誤，從外部連入卻一切正常。 
 
-![siteBlocked](/img/blogs/nextcloud/6cb700d9/siteIPBlocked.png)
+![siteBlocked](/img/blogs/c25d04b3/siteIPBlocked.png)
 
 
 ## 錯誤原因
@@ -113,7 +113,7 @@ dbadmin@localhost [nextcloud]>
 如果你想以後都不要被誤鎖內網，可以在 `管理員 > 管理設置 > 安全性` 中設置白名單。  
 (但建議應該去查 log 看哪個裝置在搞，而不是設白名單)  
 
-![siteWhitelist](/img/blogs/nextcloud/6cb700d9/siteWhitelist.png)
+![siteWhitelist](/img/blogs/c25d04b3/siteWhitelist.png)
 
 
 ## 參考連結  
