@@ -181,7 +181,7 @@ http {
 把以下 timeout 都提高到 3600s (解決 504 塊組裝錯誤)  
 如果有添加反向代理的話也需要把 timeout 都調到同樣數值。  
 
-```
+{% note no-icon %}
 fastcgi_connect_timeout
 fastcgi_send_timeout
 fastcgi_read_timeout
@@ -193,7 +193,7 @@ client_body_timeout
 proxy_connect_timeout
 proxy_send_timeout
 proxy_read_timeout
-```
+{% endnote %}
 
 
 ## 修改上傳塊大小
@@ -206,4 +206,6 @@ occ config:app:set files max_chunk_size --value 20971520
 ```
 
 不建議設置為 0 (不分塊)，從外網上傳檔案常常會失敗  
-可參考以下[連結](https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/big_file_upload_configuration.html#adjust-chunk-size-on-nextcloud-side)  
+
+可參考以下連結  
+https://docs.nextcloud.com/server/latest/admin_manual/configuration_files/big_file_upload_configuration.html#adjust-chunk-size-on-nextcloud-side
