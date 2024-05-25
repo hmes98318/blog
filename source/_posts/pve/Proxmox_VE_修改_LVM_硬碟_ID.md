@@ -20,6 +20,7 @@ ex: 106 的 VM 因為需要分類所以須改成 201 的 VM ID，但 VM Disk ID 
 
 ## 解決方法
 
+Proxmox VE 使用版本為 8.0.3  
 SSH 進入 PVE server，執行 `lvs` 命令列出當前邏輯卷 (Logical Volume)  
 
 ```
