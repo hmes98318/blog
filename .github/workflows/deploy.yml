@@ -39,4 +39,4 @@ jobs:
         with:
           push: true
           tags: |
-            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ steps.meta.outputs.tags }}
+            ${{ secrets.DOCKER_REGISTRY }}/${{ steps.meta.outputs.tags }}
