@@ -4,17 +4,17 @@ WORKDIR /blog
 COPY . .
 
 RUN apt update -y && \
-    apt install -y \
-    git \
-    nginx && \
+    apt install -y nginx && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN git pull
-RUN npm install
+RUN npm ci && \
+    npm run clean && \
+    npm run build
 
 RUN rm -rf /var/www/html
 RUN ln -s /blog/public /var/www/html
 
+
 EXPOSE 80
 
-ENTRYPOINT git pull && npm run clean && npm run build && nginx -g "daemon off;"
+ENTRYPOINT nginx -g "daemon off;"
