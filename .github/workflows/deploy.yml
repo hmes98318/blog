@@ -38,4 +38,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ secrets.DOCKER_REGISTRY }}/${{ secrets.DOCKER_USERNAME }}/${{ steps.meta.outputs.tags }}
