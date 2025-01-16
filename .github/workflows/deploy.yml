@@ -25,7 +25,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ github.repository }}
+            ${{ secrets.DOCKER_REGISTRY }}/${{ github.repository }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=tag
@@ -38,5 +38,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: |
-            ${{ secrets.DOCKER_REGISTRY }}/${{ steps.meta.outputs.tags }}
+          tags: ${{ steps.meta.outputs.tags }}
