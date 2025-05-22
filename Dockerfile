@@ -1,20 +1,20 @@
-FROM node:18.17.1
+FROM node:22.15.0-slim AS node_build
 
-WORKDIR /blog
+WORKDIR /app
+
 COPY . .
-
-RUN apt update -y && \
-    apt install -y nginx && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN npm ci && \
     npm run clean && \
     npm run build
 
-RUN rm -rf /var/www/html
-RUN ln -s /blog/public /var/www/html
 
+############################################################
+
+FROM nginx:stable-alpine-slim
+
+COPY --from=node_build /app/public /usr/share/nginx/html
 
 EXPOSE 80
 
-ENTRYPOINT nginx -g "daemon off;"
+CMD ["nginx", "-g", "daemon off;"]
