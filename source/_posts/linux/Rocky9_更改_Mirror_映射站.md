@@ -32,7 +32,7 @@ $ cp /etc/yum.repos.d/[Rr]ocky*.repo backup/
 參考 Rocky Linux 官方提供的 Mirror list：  
 https://mirrors.rockylinux.org/mirrormanager/mirrors  
 
-我使用 `rocky-linux-asia-east1.production.gcp.mirrors.ctrliq.cloud mirror`  
+我使用 `mirror.twds.com.tw`，這是一個位於台灣的鏡像站點，速度較快且穩定。  
 
 
 ## 修改設定檔
@@ -40,7 +40,7 @@ https://mirrors.rockylinux.org/mirrormanager/mirrors
 更改 mirror   
 ```bash
 sed -e 's|^mirrorlist=|#mirrorlist=|g' \
-    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://rocky-linux-asia-east1.production.gcp.mirrors.ctrliq.cloud/pub/rocky|g' \
+    -e 's|^#baseurl=http://dl.rockylinux.org/$contentdir|baseurl=https://mirror.twds.com.tw/rockylinux|g' \
     -i.bak \
     /etc/yum.repos.d/[Rr]ocky*.repo
 ```
@@ -51,7 +51,7 @@ sed -e 's|^mirrorlist=|#mirrorlist=|g' \
 如果要恢復可使用此命令或剛剛的備份檔  
 ```bash
 sed -e 's|^#mirrorlist=|mirrorlist=|g' \
-    -e 's|^baseurl=https://rocky-linux-asia-east1.production.gcp.mirrors.ctrliq.cloud/pub/rocky|#baseurl=http://dl.rockylinux.org/$contentdir|g' \
+    -e 's|^baseurl=https://mirror.twds.com.tw/rockylinux|#baseurl=http://dl.rockylinux.org/$contentdir|g' \
     -i.bak \
     /etc/yum.repos.d/[Rr]ocky*.repo
 ```
