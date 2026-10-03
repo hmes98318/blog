@@ -1,11 +1,13 @@
 ---
-title: 搭建 npm 私人鏡像站
+title: 用 Verdaccio 架設 npm 私人鏡像站
 tags:
   - Node.js
   - Server
+  - Verdaccio
+  - Docker
 categories: Node.js
-keywords: 'Node.js,npm,鏡像站'
-description: 搭建 npm 私人鏡像站
+keywords: 'Verdaccio npm 私有 Registry,npm 私人鏡像站,Verdaccio Docker Compose,npm registry 設定,nrm,Nginx 反向代理'
+description: 用 Verdaccio 和 Docker Compose 架設私人 npm 鏡像站，把套件留在自己的伺服器上，並透過 Nginx 提供 HTTPS 連線。
 cover: /img/background/npm.png
 abbrlink: c7d1d524
 comments: true
@@ -13,24 +15,23 @@ date: 2023-09-01 20:30:59
 ---
 
 
-搭建 npm 私人鏡像站有三種常見的解決方案，分別是 [CNPM](https://github.com/cnpm/cnpmcore)、[Nexus](https://www.sonatype.com/) 和 [Verdaccio](https://verdaccio.org/)。
+架設 npm 私人鏡像站時，常見的方案包括 [CNPM](https://github.com/cnpm/cnpmcore)、[Nexus](https://www.sonatype.com/) 與 [Verdaccio](https://verdaccio.org/)。
 
+* **CNPM**  
+  CNPM 是一套以 Node.js 為基礎的 npm registry／鏡像方案，最初由淘寶團隊推出，主要用於改善中國地區存取 npm 套件時的下載速度與穩定性。  
+  相較其他方案，CNPM 的部署與維護門檻較高；若不搭配雲端物件儲存，快取與儲存空間的設定也較為繁瑣。
 
-* **CNPM**
-CNPM 是一個基於Node.js的 npm 鏡像源，旨在提供更快速和穩定的包管理體驗。它是淘寶公司推出的項目，通常用於中國地區的開發者，以加速包的下載速度。  
-但部屬上手難度較高，不使用雲端儲存 npm 緩存的設置也較麻煩。  
+* **Nexus**  
+  Nexus Repository 是 Sonatype 開發的套件儲存與發布平台，支援 npm、Maven、Docker 等多種套件格式，適合需要集中管理多種類型套件的環境。  
+  不過，在透過 Nginx 反向代理並進行路徑重寫時，需要特別留意 base path 與 registry URL 的設定，否則可能造成套件下載失敗。
 
-* **Nexus**
-Nexus是一個由Sonatype開發的強大的存儲和分發平台，支持多種包管理器，包括 npm。  
-但如果使用Nginx反向代理重寫路徑會出現無法下載包的問題。  
-
-* **Verdaccio**
-Verdaccio是一個輕量級的 npm 私人鏡像站管理工具，允許您在本地搭建私人 npm 鏡像站，它易於安裝和配置，用於自己的項目或組織內部使用。  
+* **Verdaccio**  
+  Verdaccio 是一套輕量級的 npm 私有 registry，安裝與設定相對簡單，適合個人專案、小型團隊或內部環境使用。它也能作為 npm 官方 registry 的代理與快取層，減少重複下載並提升內部套件的存取效率。
 
 --------------------
 
 
-## 搭建步驟
+## 架設步驟
 
 上面三種解決方案，我以不搞死自己的前提選擇了 Verdaccio 進行搭建 (~~已經被上面兩種搞過了~~)，
 本次，我們將使用 Verdaccio 搭配 Docker Compose 來搭建私人 npm 鏡像站，並使用 Nginx 作為反向代理。
@@ -136,7 +137,7 @@ chmod -R 777 data/
 ```
 
 
-## 使用步驟
+## 切換鏡像站與登入
 
 ### 安裝 nrm 
 
@@ -182,7 +183,7 @@ npm login
 ```
 
 
-## Nginx反向代理配置
+## Nginx 反向代理設定
 
 verdaccio 配置完成後接下來，我們將使用 Nginx 作為反向代理來通過 https 提供私人 npm 鏡像站服務。
 
@@ -210,3 +211,7 @@ server {
 上述 Nginx 配置文件將聽取443端口，使用 SSL 加密，並將請求代理到 Verdaccio 容器的地址。同時，它使用 Certbot 管理的 SSL 證書來提供加密。  
 
 完成這些配置後，就成功搭建了一個私人 npm 鏡像站，並使用 Nginx 進行了反向代理。
+
+## 相關文章
+
+- [在 Rocky Linux 9 的 Nginx 啟用 Brotli 壓縮](/posts/dd600bd3/)

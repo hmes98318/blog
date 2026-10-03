@@ -38,6 +38,16 @@ export default defineConfig([
     }
   },
   {
+    files: ['scripts/**/*.js'],
+    languageOptions: {
+      sourceType: 'commonjs',
+      globals: {
+        ...globals.node,
+        hexo: 'readonly'
+      }
+    }
+  },
+  {
     files: ['eslint.config.mjs'],
     languageOptions: {
       globals: globals.node

@@ -1,10 +1,10 @@
 ---
-title: Nextcloud 登入密碼多次錯誤鎖定IP
+title: Nextcloud 內網登入時 IP 被鎖
 tags:
   - Nextcloud
 categories: Nextcloud
-keywords: 'Nextcloud,Nextcloud 登入鎖定,Nextcloud 密碼錯誤,Nextcloud Too many auth attempts'
-description: Nextcloud 登入密碼多次錯誤鎖定IP
+keywords: 'Nextcloud 登入 IP 鎖定,Nextcloud 密碼錯誤,Nextcloud Too many requests,Nextcloud 暴力破解保護,NAT Loopback,trusted_proxies'
+description: Nextcloud 在內網登入時說密碼錯誤太多、鎖住 IP，外網卻能正常登入。檢查來源 IP 與代理設定，並清除被鎖 IP 的登入失敗紀錄。
 cover: /img/background/nextcloud.png
 abbrlink: c25d04b3
 comments: true
@@ -14,7 +14,7 @@ date: 2024-05-19 03:30:37
 
 在登入 Nextcloud 網頁時，顯示登入密碼多次錯誤鎖定 IP，而只有在內網連接時才會出現此錯誤，從外部連入卻一切正常。 
 
-![siteBlocked](/img/blogs/c25d04b3/siteIPBlocked.png)
+![Nextcloud 登入頁面顯示來源 IP 被封鎖](/img/blogs/c25d04b3/siteIPBlocked.png)
 
 
 ## 錯誤原因
@@ -113,9 +113,14 @@ dbadmin@localhost [nextcloud]>
 如果你想以後都不要被誤鎖內網，可以在 `管理員 > 管理設置 > 安全性` 中設置白名單。  
 (但建議應該去查 log 看哪個裝置在搞，而不是設白名單)  
 
-![siteWhitelist](/img/blogs/c25d04b3/siteWhitelist.png)
+![Nextcloud 管理設定中的暴力破解保護白名單](/img/blogs/c25d04b3/siteWhitelist.png)
 
 
 ## 參考連結  
 * https://help.nextcloud.com/t/here-were-too-many-requests-from-your-network-retry-later-or-contact-your-administrator-if-this-is-an-error/117230/9  
 * https://help.nextcloud.com/t/cannot-login-too-many-requests/100905/12
+
+## 相關文章
+
+- [Nextcloud 設定 Nginx 反向代理](/posts/efd7b7b9/)
+- [用 Docker Compose 架設 Nextcloud 雲端硬碟](/posts/4e1d9a72/)

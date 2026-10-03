@@ -1,10 +1,10 @@
 ---
-title: Rocky Linux 9 更改 Mirror 映射站
+title: Rocky Linux 9 更換套件鏡像站
 tags:
   - Rocky Linux
 categories: Rocky Linux
-keywords: 'Rocky Linux,Rocky Linux 9,Mirror 更換,映射站,套件來源,dnf,yum,repo,baseurl,mirrorlist,系統更新加速,Rocky Linux Mirror,Rocky Linux 加速,Rocky Linux 套件下載'
-description: Rocky Linux 9 更改 Mirror 映射站
+keywords: 'Rocky Linux 9 更換 Mirror,Rocky Linux 台灣鏡像站,DNF 套件來源,mirrorlist,baseurl,dnf makecache'
+description: Rocky Linux 9 的套件下載太慢時，可以換個 Mirror 試試。這裡用台灣的 mirror.twds.com.tw，改完設定再重建 DNF 快取。
 cover: /img/background/rockylinux.svg
 abbrlink: 8d1a9329
 comments: true
@@ -72,3 +72,7 @@ $ dnf makecache
 
 * https://mirrors.rockylinux.org/mirrormanager/
 * https://sysin.org/blog/rocky-linux-mirrors/
+
+## 相關文章
+
+- [在 Rocky Linux 9 的 Nginx 啟用 Brotli 壓縮](/posts/dd600bd3/)

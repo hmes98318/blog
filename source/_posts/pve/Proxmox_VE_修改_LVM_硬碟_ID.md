@@ -1,10 +1,10 @@
 ---
-title: Proxmox VE 修改 LVM 硬碟 ID
+title: Proxmox VE 修改 LVM 磁碟名稱
 tags:
   - Proxmox VE
 categories: Proxmox VE
-keywords: 'Proxmox VE,Proxmox VE 修改 LVM 硬碟 ID,Proxmox VE rename disk,Proxmox VE change disk'
-description: Proxmox VE 修改 LVM 硬碟 ID
+keywords: 'Proxmox VE LVM 磁碟重新命名,PVE 修改 VM 硬碟 ID,lvrename,vm-disk,qm disk rescan'
+description: VM ID 從 106 改成 201 後，LVM 磁碟名稱還留著 106。用 lvrename 把名稱改好，再重新掃描並掛回 VM，讓磁碟名稱跟上新的 ID。
 cover: /img/background/pve.png
 abbrlink: 48d8abb
 comments: true
@@ -12,13 +12,14 @@ date: 2024-05-26 04:43:57
 ---
 
 
-在修改 VM ID 後會出現一個問題，原本同 VM ID 一起創建的 VM Disk ID 仍是舊的 VM ID 值。  
-ex: 106 的 VM 因為需要分類所以須改成 201 的 VM ID，但 VM Disk ID 仍是 106 而不是修改後的 201  
+在 Proxmox VE 把 VM ID 改掉後，會發現 LVM 磁碟名稱還留著舊的 ID。
 
-![oldVM](/img/blogs/48d8abb/oldVM.png)
+例如，為了分類把 VM ID 從 106 改成 201，磁碟名稱裡卻還是 106。
+
+![Proxmox VE 修改 VM ID 後仍保留舊名稱的 LVM 磁碟](/img/blogs/48d8abb/oldVM.png)
 
 
-## 解決方法
+## 用 lvrename 修改名稱
 
 Proxmox VE 使用版本為 8.0.3  
 SSH 進入 PVE server，執行 `lvs` 命令列出當前邏輯卷 (Logical Volume)  
@@ -63,6 +64,10 @@ qm disk rescan
 
 完成後刷新網頁控制台，即可看到修改後的磁碟並重新掛載即可。  
 
-![mountDisk](/img/blogs/48d8abb/mountDisk.png)
+![Proxmox VE 重新掃描後掛載改名的 VM 磁碟](/img/blogs/48d8abb/mountDisk.png)
 
-![oldVM](/img/blogs/48d8abb/oldVM.png)
+![Proxmox VE 原 VM 磁碟名稱的對照畫面](/img/blogs/48d8abb/oldVM.png)
+
+## 相關文章
+
+- [Proxmox VE VM 硬碟效能比較](/posts/c0ed975c/)

@@ -1,11 +1,11 @@
 ---
-title: Nextcloud 遷移指南
+title: TrueNAS 上的 Nextcloud 遷移紀錄（已棄用）
 tags:
   - Nextcloud
   - TrueNAS
 categories: Nextcloud
-keywords: 'Nextcloud,TrueNAS Nextcloud,Nextcloud Jail,Nextcloud 504 塊組裝錯誤'
-description: Nextcloud 遷移指南
+keywords: 'TrueNAS CORE Nextcloud 遷移,Nextcloud Jail,Nextcloud config.php 備份,Nextcloud 資料庫匯出,Nextcloud 遷移紀錄'
+description: 升級伺服器時，把 TrueNAS Jail 裡停在 24.0.1.1 的 Nextcloud 搬到新環境。這是 2023 年的舊紀錄，已棄用；新部署請看 Docker Compose 教學。
 cover: /img/background/nextcloud.png
 abbrlink: 811961c1
 comments: true
@@ -23,23 +23,23 @@ date: 2023-08-27 22:10:02
 ## 前置作業
 
 開始進行前記得先幫資料拍張快照，避免造成不可逆的損失。  
-![createSnapshot](/img/blogs/811961c1/createSnapshot.png)
+![TrueNAS CORE 遷移 Nextcloud 前建立資料快照](/img/blogs/811961c1/createSnapshot.png)
 
 使用 TrueNAS 的插件添加新的 Nextcloud，因為本次升級的版本為 27.0.2.1 所以我把名稱設為 nextcloud27  
-![pluginAdd](/img/blogs/811961c1/pluginAdd.png)
+![TrueNAS CORE 新增 Nextcloud Jail 插件](/img/blogs/811961c1/pluginAdd.png)
 
 安裝完成後記下以下內容，如果忘了也可以到插件那邊找。  
-![installSuccessMsg](/img/blogs/811961c1/installSuccessMsg.png)
+![Nextcloud Jail 安裝完成後的連線與帳號資訊](/img/blogs/811961c1/installSuccessMsg.png)
 
 給新的 Nextcloud 資料添加掛載點，與舊的相同路徑。
-![mountPoint](/img/blogs/811961c1/mountPoint.png)
+![TrueNAS CORE 為新的 Nextcloud Jail 設定資料掛載點](/img/blogs/811961c1/mountPoint.png)
 
 
 ## 拉取設定檔
 
 接下來把舊的 Nextcloud 資料拉出來，使用 SSH 進入 TrueNAS ，  
 用 `iocage list` 列出當前的所有 Jail ，使用 `iocage exec <舊的 nextcloud ip> tcsh` 進入 Jail。  
-![iocageExec](/img/blogs/811961c1/iocageExec.png)
+![使用 iocage 列出並進入 Nextcloud Jail](/img/blogs/811961c1/iocageExec.png)
 
 進入 Nextcloud 主目錄  
 ```tcsh
@@ -272,6 +272,6 @@ https://blog.gtwang.org/linux/nginx-php-fpm-configuration-optimization/
 
 
 其他設置可參考以下文章
-* [Nextcloud 添加預覽生成器](/posts/aba6d71)
-* [Nextcloud 提高上傳檔案大小上限](/posts/99b26485)
-* [Nextcloud 添加 Nginx 反向代理](/posts/efd7b7b9)
+* [Nextcloud 安裝預覽生成器](/posts/aba6d71/)
+* [Nextcloud 提高檔案上傳大小上限](/posts/99b26485/)
+* [Nextcloud 設定 Nginx 反向代理](/posts/efd7b7b9/)

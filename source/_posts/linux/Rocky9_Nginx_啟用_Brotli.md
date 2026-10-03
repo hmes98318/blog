@@ -1,11 +1,11 @@
 ---
-title: 在 Rocky Linux 9 Nginx 上啟用 Brotli 壓縮
+title: 在 Rocky Linux 9 的 Nginx 啟用 Brotli 壓縮
 tags:
   - Rocky Linux
   - Nginx
 categories: Rocky Linux
-keywords: 'Rocky Linux,Nginx,Brotli,網站壓縮,網頁加速,Google Brotli,網站優化,Rocky Linux 9,Nginx 模組編譯,Nginx 性能優化'
-description: 在 Rocky Linux 9 Nginx 上啟用 Brotli 壓縮
+keywords: 'Rocky Linux 9 Nginx Brotli,ngx_brotli 編譯,Nginx 動態模組,Brotli 壓縮,load_module,Content-Encoding br'
+description: '在 Rocky Linux 9 替 Nginx 補上 Brotli 壓縮。先編譯 ngx_brotli 動態模組，裝好後用 curl 確認回應裡有沒有 Content-Encoding: br。'
 cover: /img/background/nginx.svg
 abbrlink: dd600bd3
 comments: true
@@ -461,3 +461,8 @@ curl -H 'Accept-Encoding: br' -I https://<domain.com>
 * [Google Brotli GitHub 儲存庫](https://github.com/google/brotli)
 * https://docs.nginx.com/nginx/admin-guide/installing-nginx/installing-nginx-open-source/#installing-prebuilt-rhel-centos-oracle-linux-almalinux-rocky-linux-packages
 * https://www.cnblogs.com/-wenli/p/13594882.html
+
+## 相關文章
+
+- [Rocky Linux 9 更換套件鏡像站](/posts/8d1a9329/)
+- [Nextcloud 設定 Nginx 反向代理](/posts/efd7b7b9/)

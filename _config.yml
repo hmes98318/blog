@@ -4,9 +4,9 @@
 
 # Site
 title: ggwp's Blog
-subtitle: 寫了一堆日常走彎路的blog
+subtitle: 寫了一堆日常走彎路的 blog
 description: 我都睡不飽
-keywords: hexo,hmes98318,blog
+keywords: Nextcloud,Proxmox VE,Rocky Linux,Docker Compose,Nginx,Verdaccio,自架服務
 author: hmes98318
 language: zh-TW
 timezone: Asia/Taipei
@@ -80,7 +80,7 @@ meta_generator: false
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-updated_option: 'mtime'
+updated_option: 'date'
 
 # Pagination
 ## Set per_page to 0 to disable pagination

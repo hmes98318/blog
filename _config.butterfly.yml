@@ -189,7 +189,7 @@ index_layout: 3
 # 3: auto_excerpt (default)
 # false: do not show the article introduction
 index_post_content:
-  method: 3
+  method: 1
   # If you set method to 2 or 3, the length need to config
   length: 500
 
@@ -209,7 +209,7 @@ toc:
 post_copyright:
   enable: true
   decode: false
-  author_href:
+  author_href: https://github.com/hmes98318
   license: CC BY-NC-SA 4.0
   license_url: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
@@ -291,7 +291,7 @@ aside:
     category: true
   card_author:
     enable: true
-    description:
+    description: 我都睡不飽
     button:
       enable: true
       icon: fab fa-github
@@ -1057,7 +1057,7 @@ structured_data:
   enable: true
   # Alternate name for the site, used in structured data
   # Format: ['name1', 'name2']
-  alternate_name:
+  alternate_name: [ggwp, blog.ggwp.tw]
 
 # Add the vendor prefixes to ensure compatibility
 css_prefix: true

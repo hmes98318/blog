@@ -6,12 +6,13 @@ tags:
   - MariaDB
   - Redis
 categories: Nextcloud
-keywords: 'Nextcloud,Docker Compose,nextcloud-custom,MariaDB,Redis,Nextcloud config.php,Nextcloud 更新,Cloudflare 上傳限制'
-description: 使用 nextcloud-custom 32.0.15 與 Docker Compose 部署 Nextcloud，搭配 MariaDB、Redis 與本機目錄持久化，說明 HTTPS、config.php、應用程式、分塊上傳、備份及更新流程。
+keywords: 'Nextcloud Docker Compose 部署,自架雲端硬碟,nextcloud-custom,MariaDB,Redis,Nextcloud 備份與更新,Cloudflare 分塊上傳'
+description: 把 Nextcloud 架在自己的伺服器上，讓手機和電腦同步檔案。這裡用 Docker Compose 搭配 nextcloud-custom，備份與更新的做法也放在一起。
 cover: /img/background/nextcloud.png
 abbrlink: 4e1d9a72
 comments: true
 date: 2026-10-03 22:00:00
+updated: 2026-10-04 04:47:09
 ---
 
 想擁有 Google Drive、Dropbox 的便利，又不想把重要資料全交給第三方服務嗎？Nextcloud 可以讓你在自己的伺服器上，建立一套真正由自己掌控的雲端硬碟。
@@ -36,7 +37,7 @@ Nextcloud 容器：Nginx + PHP-FPM + Cron
         └── 宿主機目錄：config、data、custom_apps
 ```
 
-image 已內建提供 Nextcloud 網頁的 Nginx。宿主機可以直接對外服務、且 80／443 沒有被其他服務占用時，在這個 Nginx 配置正式憑證即可。若已有統一管理網域和憑證的入口、或 Nextcloud 位於內網，再增加外部反向代理；設定見 [Nextcloud 添加 Nginx 反向代理](/posts/efd7b7b9/)。
+image 已內建提供 Nextcloud 網頁的 Nginx。宿主機可以直接對外服務、且 80／443 沒有被其他服務占用時，在這個 Nginx 配置正式憑證即可。若已有統一管理網域和憑證的入口、或 Nextcloud 位於內網，再增加外部反向代理；設定見 [Nextcloud 設定 Nginx 反向代理](/posts/efd7b7b9/)。
 
 **Public IP 只解決網路可達性，正式對外仍要配置 HTTPS。** 本篇先用綁定本機的 HTTP 完成安裝，再選擇直接 HTTPS 或反向代理。
 
@@ -613,81 +614,9 @@ Nextcloud 預設 100 MiB 與 Cloudflare 文件的 100 MB 數字相近，部署�
 
 ## 推薦安裝的應用程式
 
-使用管理員選單進入「應用程式」，查看 app 詳細資訊並點擊「下載並啟用」。以 Notes 為例，商店會提供符合這台 Nextcloud 版本的發行版，而不是一律安裝最新 app。
+我目前使用的 App、依用途挑選的安裝建議，以及兩步驟驗證設定，整理在 [Nextcloud 應用程式推薦](/posts/726d0fcd/)。
 
-![在應用程式商店安裝 Notes](/img/blogs/4e1d9a72/apps-notes.jpg)
-
-也可用命令列安裝：
-
-```bash
-docker compose exec --user www-data nextcloud php occ app:install notes
-docker compose exec --user www-data nextcloud php occ app:install contacts
-docker compose exec --user www-data nextcloud php occ app:list
-docker compose restart nextcloud
-```
-
-我目前使用的 app 如下，依實際用途選擇即可：
-
-| App | 用途與配置重點 |
-| --- | --- |
-| [Audio Player](https://apps.nextcloud.com/apps/audioplayer) `audioplayer` | 建立音樂庫與線上播放；大音樂庫要預留掃描時間。 |
-| [Camera RAW Previews](https://apps.nextcloud.com/apps/camerarawpreviews) `camerarawpreviews` | 增加相機 RAW 預覽；先以自己的相機格式驗證支援。 |
-| [Contacts](https://apps.nextcloud.com/apps/contacts) `contacts` | 通訊錄與 CardDAV 同步；反向代理需正確處理 `/.well-known/carddav`。 |
-| [Diagramming](https://apps.nextcloud.com/apps/drawio) `drawio` | 在檔案介面編輯 draw.io 圖表；依資料需求選擇編輯器服務位置。 |
-| [HEIC/HEIF Image Converter](https://apps.nextcloud.com/apps/imageconverter) `imageconverter` | 轉換 HEIC／HEIF；確認底層圖片函式庫可解碼實際檔案。 |
-| [Metadata](https://apps.nextcloud.com/apps/metadata) `metadata` | 查看圖片、音訊等檔案的中繼資料；適合檢查 EXIF 資訊。 |
-| [Notes](https://apps.nextcloud.com/apps/notes) `notes` | Markdown 筆記與裝置同步，適合先安裝的小型工具。 |
-| [Preview Generator](https://apps.nextcloud.com/apps/previewgenerator) `previewgenerator` | 在背景預先產生縮圖，減少開啟照片列表時的等待；會增加儲存占用。 |
-| [Registration](https://apps.nextcloud.com/apps/registration) `registration` | 自助註冊；先完成 SMTP，並設定註冊範圍、審核與預設配額。私人站台沒有開放註冊需求時可不安裝。 |
-| [Automated media conversion](https://apps.nextcloud.com/apps/workflow_media_converter) `workflow_media_converter` | 使用 Flow 規則觸發媒體轉檔；依賴 FFmpeg，會增加 CPU 與暫存空間使用。 |
-
-還可以依需求考慮 [Calendar](https://apps.nextcloud.com/apps/calendar) 搭配 Contacts 做 CalDAV／CardDAV 同步、[Tasks](https://apps.nextcloud.com/apps/tasks) 管理待辦，或 [Deck](https://apps.nextcloud.com/apps/deck) 建立專案看板。安裝及升級前查看商店的 Nextcloud 32 release 欄位與相依套件，不使用 `--force` 或 `app_install_overwrite` 跳過相容性檢查。
-
-Nextcloud 32 已內附 TOTP provider，可以啟用後讓使用者在個人安全設定配置兩步驟驗證並保存備援碼：
-
-```bash
-docker compose exec --user www-data nextcloud php occ app:enable twofactor_totp
-```
-
-TOTP 已隨 Server 發行，不必根據舊版商店頁面的最高版本另找安裝包，見 [TOTP 商店說明](https://apps.nextcloud.com/apps/twofactor_totp)。若沒有使用 Ex-Apps，管理總覽提示缺少 AppAPI deployment daemon 時，可依需求停用 `app_api`；一般的上述 PHP app 不需要為此開放 Docker socket。
-
-### 配置 Preview Generator
-
-```bash
-docker compose exec --user www-data nextcloud php occ app:install previewgenerator
-docker compose exec --user www-data nextcloud php occ config:system:set preview_max_x --type integer --value 2048
-docker compose exec --user www-data nextcloud php occ config:system:set preview_max_y --type integer --value 2048
-docker compose exec --user www-data nextcloud php occ config:system:set preview_max_memory --type integer --value 256
-
-# 此 image 已排程 preview:pre-generate，停用 app 自己的重複背景工作
-docker compose exec --user www-data nextcloud php occ config:app:set previewgenerator job_disabled --type boolean --value true
-
-docker compose exec --user www-data nextcloud php occ preview:generate-all -v
-docker compose exec --user www-data nextcloud php occ preview:pre-generate -v
-```
-
-首次 `preview:generate-all` 會掃描現有檔案，大量照片可能執行很久；不要在高負載時重複啟動。縮圖占用也會保存在 `data` 目錄。
-
-若要啟用影片或 HEIC 預覽，將需要的 provider 加入 `config.php`，並保留原本要使用的預設 provider。例如：
-
-```php
-'enabledPreviewProviders' => [
-  'OC\Preview\BMP',
-  'OC\Preview\GIF',
-  'OC\Preview\JPEG',
-  'OC\Preview\Krita',
-  'OC\Preview\MarkDown',
-  'OC\Preview\OpenDocument',
-  'OC\Preview\PNG',
-  'OC\Preview\TXT',
-  'OC\Preview\XBitmap',
-  'OC\Preview\Movie',
-  'OC\Preview\HEIC',
-],
-'preview_ffmpeg_path' => '/usr/bin/ffmpeg',
-```
-
-影片使用 `OC\Preview\Movie`，不是替每種副檔名新增 `OC\Preview\MP4` 或 `OC\Preview\MKV`。新增 provider 後先檢查語法、重啟，再測試實際格式；FFmpeg 已內附，其他格式仍可能需要額外依賴。詳見 [官方預覽配置](https://docs.nextcloud.com/server/32/admin_manual/configuration_files/previews_configuration.html) 與 [Preview Generator 使用說明](https://github.com/nextcloud/previewgenerator)。
+本篇使用的 image 已排程 `preview:pre-generate`，安裝 Preview Generator 後，請依 [背景預覽工作](/posts/aba6d71/#背景預覽工作) 配置，避免重複執行預覽工作。
 
 ## 日常檢查與備份
 
@@ -813,4 +742,7 @@ occ app:list
 - [Nextcloud 32 Nginx 配置](https://docs.nextcloud.com/server/32/admin_manual/installation/nginx.html)
 - [Nextcloud occ 指令](https://docs.nextcloud.com/server/32/admin_manual/occ_command.html)
 - [Nextcloud Redis 與快取](https://docs.nextcloud.com/server/32/admin_manual/configuration_server/caching_configuration.html)
-- [Nextcloud 添加 Nginx 反向代理](/posts/efd7b7b9/)
+- [Nextcloud 設定 Nginx 反向代理](/posts/efd7b7b9/)
+- [Nextcloud 內網登入時 IP 被鎖](/posts/c25d04b3/)
+- [Nextcloud 安裝預覽生成器](/posts/aba6d71/)
+- [Nextcloud 提高檔案上傳大小上限](/posts/99b26485/)
