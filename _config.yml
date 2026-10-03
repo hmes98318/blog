@@ -12,29 +12,10 @@ language: zh-TW
 timezone: Asia/Taipei
 
 # URL
-## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
+## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
 url: https://blog.ggwp.tw
-root: /
-# permalink: :year/:month/:day/:title/
 permalink: posts/:abbrlink/
-
-# abbrlink config
-abbrlink:
-  alg: crc32 #support crc16(default) and crc32
-  rep: hex #support dec(default) and hex
-  drafts: false #(true)Process draft,(false)Do not process draft. false(default)
-  # Generate categories from directory-tree
-  # depth: the max_depth of directory-tree you want to generate, should > 0
-  auto_category:
-    enable: false #true(default)
-    depth: #3(default)
-    over_write: false
-  auto_title: false #enable auto title, it can auto fill the title by path
-  auto_date: false #enable auto date, it can auto fill the date by time today
-  force: false #enable force mode,in this mode, the plugin will ignore the cache, and calc the abbrlink for every post even it already had abbrlink.
-
-
-permalink_defaults:
+permalink_defaults: {}
 pretty_urls:
   trailing_index: false # Set to false to remove trailing 'index.html' from permalinks
   trailing_html: false # Set to false to remove trailing '.html' from permalinks
@@ -47,7 +28,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: []
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -56,21 +37,20 @@ titlecase: false # Transform title into titlecase
 external_link:
   enable: true # Open external links in new tab
   field: site # Apply to the whole site
-  exclude:
+  exclude: []
 filename_case: 0
 render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
+syntax_highlighter: highlight.js
 highlight:
-  enable: true
   line_number: true
   auto_detect: false
   tab_replace: ''
   wrap: true
   hljs: false
 prismjs:
-  enable: false
   preprocess: true
   line_number: true
   tab_replace: ''
@@ -86,8 +66,8 @@ index_generator:
 
 # Category & Tag
 default_category: uncategorized
-category_map:
-tag_map:
+category_map: {}
+tag_map: {}
 
 # Metadata elements
 ## https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta
@@ -100,7 +80,7 @@ meta_generator: false
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
 ## updated_option supports 'mtime', 'date', 'empty'
-# updated_option: 'mtime'
+updated_option: 'mtime'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
@@ -111,76 +91,89 @@ pagination_dir: page
 ## include:/exclude: options only apply to the 'source/' folder
 include:
 exclude:
-ignore:
-  - source-en/
+ignore: []
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
 theme: butterfly
-# theme: butterfly-stable
 
 # Deployment
-## Docs: https://hexo.io/docs/deployment.html
+## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
   repo: git@github.com:hmes98318/blog.git
   branch: gh-page
-  # other deployer
 
-search:
-  path: search.xml
-  field: post
-  content: true
-  format: html
+# Blog plugins
+# Persistent post URLs (hexo-abbrlink)
+# https://github.com/Rozbo/hexo-abbrlink
+abbrlink:
+  # Algorithm: crc16 (default) / crc32.
+  alg: crc32
+  # Representation: dec (default) / hex.
+  rep: hex
+  # Generate links for drafts when true.
+  drafts: false
+  auto_category:
+    # Generate categories from the directory tree when true.
+    enable: false
+  # Automatically populate missing post titles.
+  auto_title: false
+  # Automatically populate missing post dates.
+  auto_date: false
+  # Recalculate existing abbrlinks when true.
+  force: false
 
-# aplayer:
-#   meting: true
-#   asset_inject: false
-
-# encrypt: # hexo-blog-encrypt
-#   abstract: Here's something encrypted, password is required to continue reading.
-#   message: Hey, password is required here.
-#   template: <div id="hexo-blog-encrypt" data-wpm="{{hbeWrongPassMessage}}" data-whm="{{hbeWrongHashMessage}}"><div class="hbe-input-container"><input type="password" id="hbePass" placeholder="{{hbeMessage}}" /><label>{{hbeMessage}}</label><div class="bottom-line"></div></div><script id="hbeData" type="hbeData" data-hmacdigest="{{hbeHmacDigest}}">{{hbeEncryptedData}}</script></div>
-#   wrong_pass_message: Oh, this is an invalid password. Check and try again, please.
-#   wrong_hash_message: Oh, these decrypted content cannot be verified, but you can still have a look.
-
-# kramed:
-#   gfm: true
-#   pedantic: false
-#   sanitize: false
-#   tables: true
-#   breaks: true
-#   smartLists: true
-#   smartypants: true
-
-markdown_it_plus:
-  plugins:
-    - plugin:
-      name: '@neilsustc/markdown-it-katex'
-      enable: true
-      options:
-        strict: false
-
-feed:
-  type: atom
-  path: atom.xml
-  limit: 0
-
-nofollow:
-  enable: true
-  field: site
-  exclude:
-
-sitemap:
-  path: sitemap.xml
-  rel: false
-  tags: true
-  categories: true
-
+# Markdown renderer options (hexo-renderer-marked)
+# https://github.com/hexojs/hexo-renderer-marked
 marked:
+  # Enable smart punctuation replacement.
   smartypants: false
+  # Enable Markdown description lists.
   descriptionLists: false
 
-# server:
-#   port: 3127
+# Local search index (hexo-generator-searchdb)
+# https://github.com/next-theme/hexo-generator-searchdb
+# The search interface is configured in _config.butterfly.yml.
+search:
+  # Output filename: XML or JSON.
+  path: search.xml
+  # Index scope: post / page / all.
+  field: post
+  # Include article content in the index.
+  content: true
+  # Stored content: striptags / html / raw.
+  format: html
+
+# Atom / RSS feeds (hexo-generator-feed)
+# https://github.com/hexojs/hexo-generator-feed
+feed:
+  # Feed type: atom / rss2, or a list containing both.
+  type: atom
+  # Output filename; use a list when generating both feed types.
+  path: atom.xml
+  # Maximum posts; 0 or false includes all posts.
+  limit: 0
+
+# Sitemap generation (hexo-generator-sitemap)
+# https://github.com/hexojs/hexo-generator-sitemap
+sitemap:
+  # Output sitemap filename.
+  path: sitemap.xml
+  # Add a rel-sitemap link to the site header.
+  rel: false
+  # Include tag pages.
+  tags: true
+  # Include category pages.
+  categories: true
+
+# External link attributes (hexo-filter-nofollow)
+# https://github.com/hexojs/hexo-filter-nofollow
+nofollow:
+  # Add external nofollow noreferrer attributes to external links.
+  enable: true
+  # Apply to site / post.
+  field: site
+  # Hostnames excluded from the filter; include subdomains when needed.
+  exclude: []

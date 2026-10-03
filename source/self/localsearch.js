@@ -6,7 +6,9 @@ window.addEventListener('load', () => {
     bodyStyle.overflow = 'hidden'
     btf.animateIn(document.getElementById('search-mask'), 'to_show 0.5s')
     btf.animateIn(document.querySelector('#local-search .search-dialog'), 'titleScale 0.5s')
-    setTimeout(() => { document.querySelector('#local-search-input input').focus() }, 100)
+    setTimeout(() => {
+      document.querySelector('#local-search-input input').focus()
+    }, 100)
     if (!loadFlag) {
       search(GLOBAL_CONFIG.localSearch.path)
       loadFlag = true
@@ -71,7 +73,7 @@ window.addEventListener('load', () => {
     const $resultContent = document.getElementById('local-search-results')
     const $loadingStatus = document.getElementById('loading-status')
     $input.addEventListener('input', function () {
-      const keywords = Traditionalized(this.value).trim().toLowerCase().split(/[\s]+/)
+      const keywords = window.Traditionalized(this.value).trim().toLowerCase().split(/[\s]+/)
       if (keywords[0] !== '') $loadingStatus.innerHTML = '<i class="fas fa-spinner fa-pulse"></i>'
 
       $resultContent.innerHTML = ''

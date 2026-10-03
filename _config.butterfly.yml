@@ -13,23 +13,23 @@ nav:
   # Navigation bar logo image
   logo:
   display_title: true
+  display_post_title: true
   # Whether to fix navigation bar
   fixed: false
 
-# Menu 目錄
 menu:
   首頁: / || fas fa-home
-  # 目錄||fas fa-compass:
   歸檔: /archives/ || fas fa-archive
   標籤: /tags/ || fas fa-tags
   分類: /categories/ || fas fa-folder-open
   留言板: /messageboard/ || fas fa-comment-dots
-  # 語言||fas fa-language:
-  #   English: /en/ || fas fa-e
-  #   中文: / || fas fa-c
+  # Home: / || fas fa-home
+  # List||fas fa-list:
+  #   Music: /music/ || fas fa-music
+  #   Movie: /movies/ || fas fa-video
 
 # --------------------------------------
-# Code Blocks Settings (程式碼相關)
+# Code Blocks Settings
 # --------------------------------------
 
 code_blocks:
@@ -47,23 +47,21 @@ code_blocks:
   shrink: false
   fullpage: false
 
-# Social media links (社交圖標設置)
+# Social media links
 # Formal:
 #   icon: link || the description || color
 social:
-  # fab fa-github: https://github.com/xxxxx || Github || '#24292e'
-  # fas fa-envelope: mailto:xxxxxx@gmail.com || Email || '#4a7dbe'
   fab fa-github: https://github.com/hmes98318 || Github || '#24292e'
   fas fa-envelope: mailto:hmes98318@gmail.com || Email || '#24292e'
+  # fab fa-github: https://github.com/xxxxx || Github || '#24292e'
+  # fas fa-envelope: mailto:xxxxxx@gmail.com || Email || '#4a7dbe'
 
 # --------------------------------------
 # Image Settings
 # --------------------------------------
 
-# Favicon（網站圖標）
-favicon: /img/favicon.png
+favicon: /img/favicon.ico
 
-# Avatar (頭像)
 avatar:
   img: /img/avatar.png
   effect: false
@@ -100,11 +98,12 @@ category_per_img:
 footer_img: false
 
 # Website Background
-# Can set it to color or image url
+# Can set it to color, image URL or an array containing colors and/or image URLs
+# If an array is provided, a random background will be selected from the array on each load
 background:
 
 cover:
-  # Disable the cover or not (是否顯示文章封面)
+  # Disable the cover or not
   index_enable: true
   aside_enable: true
   archives_enable: true
@@ -120,34 +119,28 @@ error_img:
 # A simple 404 page
 error_404:
   enable: true
-  subtitle: '404 頁面沒有找到'
+  subtitle: 404 頁面沒有找到
   background: /img/error-page.png
 
 post_meta:
   # Home Page
   page:
-    # 主頁文章日期是創建日或者更新日或都顯示, Choose: created / updated / both
+    # Choose: created / updated / both
     date_type: created
-    # 顯示日期還是相對日期, Choose: date / relative
+    # Choose: date / relative
     date_format: date
-    # 主頁是否顯示分類, Choose: boolean
     categories: true
-    # 主頁是否顯示標籤, Choose: boolean
     tags: false
-    # 顯示描述性文字, Choose: boolean
     label: true
   post:
     # Choose: left / center
     position: left
-    # 文章頁日期是創建日或者更新日或都顯示, Choose: created / updated / both
+    # Choose: created / updated / both
     date_type: both
-    # 顯示日期還是相對日期, Choose: date / relative
+    # Choose: date / relative
     date_format: date
-    # 文章是否顯示分類, Choose: boolean
     categories: true
-    # 文章是否顯示標籤, Choose: boolean
     tags: true
-    # 顯示描述性文字, Choose: boolean
     label: true
 
 # --------------------------------------
@@ -174,7 +167,7 @@ subtitle:
   # Choose: false/1/2/3
   # false - disable the function
   # 1 - hitokoto.cn
-  # 2 - yijuzhan.com
+  # 2 - https://api.aa1.cn/doc/yiyan.html
   # 3 - jinrishici.com
   source: false
   # If you close the typewriter effect, the subtitle will only show the first line of sub
@@ -204,7 +197,6 @@ index_post_content:
 # Post Settings
 # --------------------------------------
 
-# toc (目錄)
 toc:
   post: true
   page: false
@@ -255,7 +247,7 @@ related_post:
 # false: disable pagination
 post_pagination: 1
 
-# Displays outdated notice for a post (文章過期提醒)
+# Displays outdated notice for a post
 noticeOutdate:
   enable: false
   # Style: simple / flat
@@ -271,15 +263,18 @@ noticeOutdate:
 # Footer Settings
 # --------------------------------------
 footer:
+  nav:
   owner:
     enable: true
     since: 2023
-  custom_text:
   # Copyright of theme and framework
-  copyright: true
+  copyright:
+    enable: true
+    version: true
+  custom_text:
 
 # --------------------------------------
-# Aside Settings (側邊欄)
+# Aside Settings
 # --------------------------------------
 
 aside:
@@ -302,7 +297,7 @@ aside:
       icon: fab fa-github
       text: Follow Me
       link: https://github.com/hmes98318
-  card_announcement: # 公告
+  card_announcement:
     enable: false
     content: This is my Blog
   card_recent_post:
@@ -331,6 +326,7 @@ aside:
     # If set 0 will show all
     limit: 40
     color: false
+    custom_colors:
     # Order of tags, random/name/length
     orderby: random
     # Sort of order. 1, asc for ascending; -1, desc for descending
@@ -416,6 +412,9 @@ rightside_item_order:
   # Default: toc,chat,comment
   show:
 
+# Animation for the bottom right config button
+rightside_config_animation: true
+
 # --------------------------------------
 # Global Settings
 # --------------------------------------
@@ -498,6 +497,11 @@ search:
     top_n_per_article: 1
     # Unescape html strings to the readable one.
     unescape: false
+    # Enable pagination for search results
+    pagination:
+      enable: false
+      # Number of search results per page
+      hitsPerPage: 8
     CDN:
 
   # Docsearch
@@ -520,12 +524,12 @@ share:
   # Share.js
   # https://github.com/overtrue/share.js
   sharejs:
-    sites: facebook,twitter,wechat,google
+    sites: facebook,x,wechat
 
   # AddToAny
   # https://www.addtoany.com/
   addtoany:
-    item: facebook,twitter,wechat,facebook_messenger,email,copy_link
+    item: facebook,x,wechat,facebook_messenger,email,copy_link
 
 # --------------------------------------
 # Comments System
@@ -662,7 +666,7 @@ artalk:
 # --------------------------------------
 
 chat:
-  # Choose: chatra/tidio/crisp
+  # Choose: chatra/tidio/crisp/knocket
   # Leave it empty if you don't need chat
   use:
   # Chat Button [recommend]
@@ -682,6 +686,10 @@ tidio:
 # https://crisp.chat/en/
 crisp:
   website_id:
+
+# https://trtc.io/solutions/knocket
+knocket:
+  identifier:
 
 # --------------------------------------
 # Analysis
@@ -704,6 +712,7 @@ umami_analytics:
   enable: false
   # For self-hosted setups, configure the hostname of the Umami instance
   serverURL:
+  script_name: script.js
   website_id:
   option:
   UV_PV:
@@ -712,6 +721,12 @@ umami_analytics:
     page_pv: false
     # Umami Cloud (API key) / self-hosted Umami (token)
     token:
+
+# https://www.googletagmanager.com/
+google_tag_manager:
+  tag_id:
+  # optional
+  domain: https://www.googletagmanager.com
 
 # --------------------------------------
 # Advertisement
@@ -742,6 +757,10 @@ ad:
 site_verification:
   - name: google-site-verification
     content: 9jphCUHniQNhkCKsk3ffxxaLOLLu5vFjyBQ0FN3Tnv8
+  # - name: google-site-verification
+  #   content: xxxxxx
+  # - name: baidu-site-verification
+  #   content: xxxxxxx
 
 # --------------------------------------
 # Beautify / Effect
@@ -934,6 +953,10 @@ mermaid:
   theme:
     light: default
     dark: dark
+  # Enable "Open in New Tab" button to view diagram in a separate window
+  open_in_new_tab: true
+  # Enable zoom and pan interactions on diagrams
+  zoom_pan: true
 
 # chartjs
 # see https://www.chartjs.org/docs/latest/
@@ -979,11 +1002,6 @@ pjax:
   exclude:
     # - /xxxxxx/
 
-# Inject the css and script (aplayer/meting)
-aplayerInject:
-  enable: false
-  per_page: true
-
 # Snackbar - Toast Notification
 # https://github.com/polonel/SnackBar
 # position: top-left / top-center / top-right / bottom-left / bottom-center / bottom-right
@@ -1002,6 +1020,8 @@ instantpage: false
 # https://github.com/verlok/vanilla-lazyload
 lazyload:
   enable: false
+  # Use browser's native lazyload instead of vanilla-lazyload
+  native: false
   # Specify the field to use lazyload (site or post)
   field: site
   placeholder:
@@ -1033,7 +1053,11 @@ Open_Graph_meta:
 
 # Structured Data
 # https://developers.google.com/search/docs/guides/intro-structured-data
-structured_data: true
+structured_data:
+  enable: true
+  # Alternate name for the site, used in structured data
+  # Format: ['name1', 'name2']
+  alternate_name:
 
 # Add the vendor prefixes to ensure compatibility
 css_prefix: true
@@ -1057,7 +1081,7 @@ CDN:
   third_party_provider: jsdelivr
 
   # Add version number to url, true or false
-  version: false
+  version: true
 
   # Custom format
   # For example: https://cdn.staticfile.org/${cdnjs_name}/${version}/${min_cdnjs_file}
@@ -1068,8 +1092,6 @@ CDN:
     # activate_power_mode:
     # algolia_js:
     # algolia_search:
-    # aplayer_css:
-    # aplayer_js:
     # artalk_css:
     # artalk_js:
     # blueimp_md5:
@@ -1093,7 +1115,6 @@ CDN:
     # gitalk_css:
     # giscus:
     # instantpage:
-    # instantsearch:
     # katex:
     # katex_copytex:
     # lazyload:
@@ -1103,7 +1124,6 @@ CDN:
     # mathjax:
     # medium_zoom:
     # mermaid:
-    # meting_js:
     # prismjs_autoloader:
     # prismjs_js:
     # prismjs_lineNumber_js:

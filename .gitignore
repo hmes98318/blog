@@ -1,11 +1,9 @@
 node_modules/
 public/
 source/_backup/
-scripts/
 
 Thumbs.db
 db.json
-pnpm-lock.yaml
 *.log
 
 .DS_Store

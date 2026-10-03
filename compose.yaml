@@ -1,8 +1,8 @@
 services:
   blog:
+    build: .
     image: blog:latest
     container_name: blog
     restart: always
     ports:
-      - 4000:80
-
+      - '4000:80'

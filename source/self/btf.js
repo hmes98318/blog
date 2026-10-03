@@ -4,7 +4,7 @@
     return item.includes(key)
   }
 
-  window.loadFullPage = (url) => {
+  window.loadFullPage = url => {
     window.location.href = url
   }
 

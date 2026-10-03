@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://blog.ggwp.tw/sitemap.xml
-Sitemap: https://blog.ggwp.tw/baidusitemap.xml

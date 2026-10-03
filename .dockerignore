@@ -1,0 +1,11 @@
+.git
+.github
+.vscode
+.history
+.deploy*
+node_modules
+public
+db.json
+*.log
+docs
+AGENTS.md

@@ -1,19 +1,16 @@
-FROM node:22.15.0-slim AS node_build
+FROM node:24.21.0-bookworm-slim AS build
 
 WORKDIR /app
 
+COPY package.json package-lock.json ./
+RUN npm install --global npm@12.2.0 && npm ci
+
 COPY . .
-
-RUN npm ci && \
-    npm run clean && \
-    npm run build
-
-
-############################################################
+RUN npm run build
 
 FROM nginx:stable-alpine-slim
 
-COPY --from=node_build /app/public /usr/share/nginx/html
+COPY --from=build /app/public /usr/share/nginx/html
 
 EXPOSE 80
 
