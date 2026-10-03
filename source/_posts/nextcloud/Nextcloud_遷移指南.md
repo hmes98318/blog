@@ -12,6 +12,7 @@ comments: true
 date: 2023-08-27 22:10:02
 ---
 
+> **本文已棄用。** 請改看新版 [打造自己的雲端硬碟：Nextcloud 部署教學](/posts/4e1d9a72/)。
 
 最近升級了伺服器所以也打算來更新一下我年久失修的 Nextcloud ，他的版本還停留在 24.0.1.1 ，  
 由於我的 Nextcloud 是使用 TrueNAS 的 Jail 來架設的，所以本篇主要以 TrueNAS 的 Jail 遷移為主。  
